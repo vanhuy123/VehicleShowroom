@@ -52,6 +52,7 @@ public class Customer extends javax.swing.JPanel {
         jLabel37.setText("Address:");
 
         jRadioButton7.setText("Male");
+        jRadioButton7.setIconTextGap(10);
 
         jLabel35.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel35.setText("Last name:");
@@ -59,6 +60,7 @@ public class Customer extends javax.swing.JPanel {
         jFormattedTextField10.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
 
         jRadioButton8.setText("Female");
+        jRadioButton8.setIconTextGap(10);
         jRadioButton8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jRadioButton8ActionPerformed(evt);
