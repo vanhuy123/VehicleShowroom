@@ -19,7 +19,7 @@ public class DBUtility {
         Connection con = null;
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            con = DriverManager.getConnection("jdbc:sqlserver://localhost:1434;databaseName=Vehicleshowroom", "sa", "1234567");
+            con = DriverManager.getConnection("jdbc:sqlserver://localhost:1434;databaseName=Vehicle", "sa", "1234567");
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(DBUtility.class.getName()).log(Level.SEVERE, null, ex);
         }
