@@ -149,9 +149,9 @@ public class Login extends javax.swing.JFrame {
                     acc = new Account(rs.getInt("UserId"), rs.getString("Username"), rs.getString("Password"), 
                             rs.getString("Fullname"), rs.getDate("Birthday"), rs.getString("Address"), rs.getString("Phone"), rs.getString("Gender"), rs.getInt("LevelSystem"));
                     this.dispose();
-                    Home home = new Home();
-                    home.setVisible(true);
-                    home.setLocationRelativeTo(null);
+                    Home.homeFrame = new Home();
+                    Home.homeFrame.setVisible(true);
+                    Home.homeFrame.setLocationRelativeTo(null);
                     JOptionPane.showMessageDialog(null, "Login success! Hello "+acc.getFullname());
                     tmp++;
                 }

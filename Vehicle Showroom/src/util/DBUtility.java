@@ -15,11 +15,14 @@ import java.util.logging.Logger;
 
 public class DBUtility {
 
+    private static Connection con = null;
+
     public static Connection getConnection() {
-        Connection con = null;
+
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            con = DriverManager.getConnection("jdbc:sqlserver://localhost:1434;databaseName=Vehicle", "sa", "1234567");
+            if(con==null||con.isClosed())
+                con = DriverManager.getConnection("jdbc:sqlserver://localhost:1434;databaseName=Vehicle", "sa", "1234567");
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(DBUtility.class.getName()).log(Level.SEVERE, null, ex);
         }
