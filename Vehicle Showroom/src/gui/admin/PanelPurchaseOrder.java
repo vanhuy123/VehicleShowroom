@@ -6,6 +6,9 @@
 package gui.admin;
 
 import gui.Home;
+import gui.Login;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
@@ -14,16 +17,21 @@ import javax.swing.table.TableColumn;
  *
  * @author nguyenvanbien
  */
-public class PurchaseOrder extends javax.swing.JPanel {
+public class PanelPurchaseOrder extends javax.swing.JPanel {
 
     public static DefaultTableModel modelListProduct;
-    
+
     /**
      * Creates new form PurchaseOrder
      */
-    public PurchaseOrder() {
+    public PanelPurchaseOrder() {
         initComponents();
-        
+        Home.puchaseOrder = new bean.PurchaseOrder();
+        Home.puchaseOrder.setUser(Login.acc);
+        Date today = new Date(System.currentTimeMillis());
+//        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+        Home.puchaseOrder.setPurchaseDate(today);
+        Home.puchaseOrder.setStatus(false);
         modelListProduct = new DefaultTableModel();
         modelListProduct.addColumn("Id");
         modelListProduct.addColumn("Name");

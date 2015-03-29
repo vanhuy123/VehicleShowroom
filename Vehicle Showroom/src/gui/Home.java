@@ -1,9 +1,7 @@
 package gui;
 
-import bean.Account;
-import gui.admin.PurchaseOrder;
-import java.awt.Component;
-import javax.swing.JOptionPane;
+import bean.PurchaseOrder;
+import gui.admin.PanelPurchaseOrder;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -17,6 +15,7 @@ import javax.swing.JOptionPane;
 public class Home extends javax.swing.JFrame {
 
     public static Home homeFrame;
+    public static PurchaseOrder puchaseOrder;
     /**
      * Creates new form Home
      */
@@ -478,7 +477,7 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel2MouseClicked
 
     private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
-        PurchaseOrder purchaseOrder = new PurchaseOrder();
+        PanelPurchaseOrder purchaseOrder = new PanelPurchaseOrder();
         spHome.setRightComponent(purchaseOrder);
     }//GEN-LAST:event_jLabel3MouseClicked
 
