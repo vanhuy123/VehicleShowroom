@@ -410,7 +410,22 @@ public class AddProductDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_btnCancelActionPerformed
 
     private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
-        // TODO add your handling code here:
+        txtName.setText("");
+        txtModel.setText("");
+        txtSpeed.setText("");
+        txtPrice.setText("");
+        txtHeight.setText("");
+        txtWeight.setText("");
+        txtWidth.setText("");
+        txtLength.setText("");
+        txtFuelTank.setText("");
+        txtQuantity.setText("");
+        txtSeat.setText("");
+        txaDescription.setText("");
+        txaRemarks.setText("");
+        txtImage.setText("");
+        cbbBrand.setSelectedIndex(0);
+        cbbColor.setSelectedIndex(0);
     }//GEN-LAST:event_btnResetActionPerformed
 
     /**
