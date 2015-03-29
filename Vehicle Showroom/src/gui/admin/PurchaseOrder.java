@@ -164,8 +164,8 @@ public class PurchaseOrder extends javax.swing.JPanel {
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         AddProductDialog d = new AddProductDialog(Home.homeFrame, true);
+        d.setLocationRelativeTo(Home.homeFrame);
         d.setVisible(true);
-        d.setLocationRelativeTo(null);
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnAdd1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdd1ActionPerformed
