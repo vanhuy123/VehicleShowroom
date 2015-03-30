@@ -15,7 +15,6 @@ import gui.admin.PanelPurchaseOrder;
 public class Home extends javax.swing.JFrame {
 
     public static Home homeFrame;
-    public static PurchaseOrder puchaseOrder;
     /**
      * Creates new form Home
      */

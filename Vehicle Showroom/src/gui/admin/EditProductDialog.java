@@ -33,7 +33,7 @@ import util.DBUtility;
  *
  * @author nguyenvanbien
  */
-public class AddProductDialog extends javax.swing.JDialog {
+public class EditProductDialog extends javax.swing.JDialog {
 
     private Connection con;
     private Map<String, Integer> mapBrand;
@@ -41,7 +41,7 @@ public class AddProductDialog extends javax.swing.JDialog {
     /**
      * Creates new form AddProductDialog
      */
-    public AddProductDialog(java.awt.Frame parent, boolean modal) {
+    public EditProductDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         con = DBUtility.getConnection();
@@ -62,7 +62,7 @@ public class AddProductDialog extends javax.swing.JDialog {
                 }
             }
         } catch (SQLException ex) {
-            Logger.getLogger(AddProductDialog.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(EditProductDialog.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -76,6 +76,26 @@ public class AddProductDialog extends javax.swing.JDialog {
         cbbColor.addItem("Yellow");
         cbbColor.addItem("Orange");
         cbbColor.addItem("Gray");
+    }
+    
+    private void InitField(){
+        
+        txtName.setText("");
+        txtModel.setText("");
+        txtSpeed.setText("");
+        txtPrice.setText("");
+        txtHeight.setText("");
+        txtWeight.setText("");
+        txtWidth.setText("");
+        txtLength.setText("");
+        txtFuelTank.setText("");
+        txtQuantity.setText("");
+        txtSeat.setText("");
+        txaDescription.setText("");
+        txaRemarks.setText("");
+        txtImage.setText("");
+        cbbBrand.setSelectedIndex(0);
+        cbbColor.setSelectedIndex(0);
     }
 
     /**
@@ -537,7 +557,7 @@ public class AddProductDialog extends javax.swing.JDialog {
         } catch (FileNotFoundException ex) {
             err += "- File not found";
         } catch (IOException ex) {
-            Logger.getLogger(AddProductDialog.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(EditProductDialog.class.getName()).log(Level.SEVERE, null, ex);
         }
         if (err.length() == 0) {
 
@@ -549,13 +569,13 @@ public class AddProductDialog extends javax.swing.JDialog {
                     fOutput.write(bs, 0, length);
                 }
             } catch (IOException ex) {
-                Logger.getLogger(AddProductDialog.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(EditProductDialog.class.getName()).log(Level.SEVERE, null, ex);
             } finally {
                 try {
                     fInput.close();
                     fOutput.close();
                 } catch (IOException ex) {
-                    Logger.getLogger(AddProductDialog.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(EditProductDialog.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
             float speed;
@@ -677,20 +697,21 @@ public class AddProductDialog extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AddProductDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EditProductDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AddProductDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EditProductDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AddProductDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EditProductDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AddProductDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EditProductDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                AddProductDialog dialog = new AddProductDialog(new javax.swing.JFrame(), true);
+                EditProductDialog dialog = new EditProductDialog(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

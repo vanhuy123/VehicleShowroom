@@ -11,47 +11,47 @@ package bean;
  */
 public class VehicleRegistration {
 
-    private int RegistrationId;
-    private PurchaseOrder purchaseId;
-    private Vehicle vehicleId;
+    private int registrationId;
+    private PurchaseOrder oPurchaseOrder;
+    private Vehicle oVehicle;
     private float price;
     private String remarks;
-    private String type;
+    private String color;
 
     public VehicleRegistration() {
     }
 
-    public VehicleRegistration(int RegistrationId, PurchaseOrder purchaseId, Vehicle vehicleId, float price, String remarks, String type) {
-        this.RegistrationId = RegistrationId;
-        this.purchaseId = purchaseId;
-        this.vehicleId = vehicleId;
+    public VehicleRegistration(int registrationId, PurchaseOrder oPurchaseOrder, Vehicle oVehicle, float price, String remarks, String color) {
+        this.registrationId = registrationId;
+        this.oPurchaseOrder = oPurchaseOrder;
+        this.oVehicle = oVehicle;
         this.price = price;
         this.remarks = remarks;
-        this.type = type;
+        this.color = color;
     }
 
     public int getRegistrationId() {
-        return RegistrationId;
+        return registrationId;
     }
 
-    public void setRegistrationId(int RegistrationId) {
-        this.RegistrationId = RegistrationId;
+    public void setRegistrationId(int registrationId) {
+        this.registrationId = registrationId;
     }
 
-    public PurchaseOrder getPurchaseId() {
-        return purchaseId;
+    public PurchaseOrder getoPurchaseOrder() {
+        return oPurchaseOrder;
     }
 
-    public void setPurchaseId(PurchaseOrder purchaseId) {
-        this.purchaseId = purchaseId;
+    public void setoPurchaseOrder(PurchaseOrder oPurchaseOrder) {
+        this.oPurchaseOrder = oPurchaseOrder;
     }
 
-    public Vehicle getVehicleId() {
-        return vehicleId;
+    public Vehicle getoVehicle() {
+        return oVehicle;
     }
 
-    public void setVehicleId(Vehicle vehicleId) {
-        this.vehicleId = vehicleId;
+    public void setoVehicle(Vehicle oVehicle) {
+        this.oVehicle = oVehicle;
     }
 
     public float getPrice() {
@@ -70,12 +70,12 @@ public class VehicleRegistration {
         this.remarks = remarks;
     }
 
-    public String getType() {
-        return type;
+    public String getColor() {
+        return color;
     }
 
-    public void settype(String type) {
-        this.type = type;
+    public void setColor(String color) {
+        this.color = color;
     }
-
+    
 }
