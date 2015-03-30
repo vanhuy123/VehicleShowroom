@@ -5,7 +5,11 @@
  */
 package gui.admin;
 
+import bean.PurchaseOrderDetails;
+import bean.Vehicle;
+import gui.Home;
 import static gui.admin.PanelPurchaseOrder.modelListProduct;
+import java.util.ArrayList;
 import java.util.Vector;
 import javax.swing.JOptionPane;
 
@@ -448,6 +452,10 @@ public class AddProductDialog extends javax.swing.JDialog {
             seat = Integer.parseInt(strSeat);
             quantity = Integer.parseInt(strQuantity);
             price = Float.parseFloat(strPrice);
+            PurchaseOrderDetails purchaseOrderDetails = new PurchaseOrderDetails();
+            purchaseOrderDetails.setPurchasePrice(price);
+            purchaseOrderDetails.setQuantity(quantity);
+            Vehicle vehicle = new Vehicle();
             Vector v = new Vector();
             v.add(modelListProduct.getRowCount() + 1);
             v.add(name);

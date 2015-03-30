@@ -11,51 +11,51 @@ package bean;
  */
 public class PurchaseOrderDetails {
 
-    private PurchaseOrder PurchaseId;
-    private Vehicle VehicleId;
-    private float PurchasePrice;
-    private int Quantity;
+    private PurchaseOrder purchaseId;
+    private Vehicle oVehicle;
+    private float purchasePrice;
+    private int quantity;
 
     public PurchaseOrderDetails() {
     }
 
-    public PurchaseOrderDetails(PurchaseOrder PurchaseId, Vehicle VehicleId, float PurchasePrice, int Quantity) {
-        this.PurchaseId = PurchaseId;
-        this.VehicleId = VehicleId;
-        this.PurchasePrice = PurchasePrice;
-        this.Quantity = Quantity;
+    public PurchaseOrderDetails(PurchaseOrder purchaseId, Vehicle oVehicle, float purchasePrice, int quantity) {
+        this.purchaseId = purchaseId;
+        this.oVehicle = oVehicle;
+        this.purchasePrice = purchasePrice;
+        this.quantity = quantity;
     }
 
     public PurchaseOrder getPurchaseId() {
-        return PurchaseId;
+        return purchaseId;
     }
 
-    public void setPurchaseId(PurchaseOrder PurchaseId) {
-        this.PurchaseId = PurchaseId;
+    public void setPurchaseId(PurchaseOrder purchaseId) {
+        this.purchaseId = purchaseId;
     }
 
-    public Vehicle getVehicleId() {
-        return VehicleId;
+    public Vehicle getoVehicle() {
+        return oVehicle;
     }
 
-    public void setVehicleId(Vehicle VehicleId) {
-        this.VehicleId = VehicleId;
+    public void setoVehicle(Vehicle oVehicle) {
+        this.oVehicle = oVehicle;
     }
 
     public float getPurchasePrice() {
-        return PurchasePrice;
+        return purchasePrice;
     }
 
-    public void setPurchasePrice(float PurchasePrice) {
-        this.PurchasePrice = PurchasePrice;
+    public void setPurchasePrice(float purchasePrice) {
+        this.purchasePrice = purchasePrice;
     }
 
     public int getQuantity() {
-        return Quantity;
+        return quantity;
     }
 
-    public void setQuantity(int Quantity) {
-        this.Quantity = Quantity;
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
-
+    
 }

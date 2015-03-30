@@ -11,27 +11,35 @@ package bean;
  */
 public class Vehicle {
 
-    private int VehicleId;
+    private int vehicleId;
     private String name;
     private String modelNumber;
-    private Brand brandId;
+    private Brand oBrand;
 
     public Vehicle() {
     }
 
-    public Vehicle(int VehicleId, String name, String modelNumber, Brand brandId) {
-        this.VehicleId = VehicleId;
+    public Vehicle(int vehicleId, String name, String modelNumber, Brand oBrand) {
+        this.vehicleId = vehicleId;
         this.name = name;
         this.modelNumber = modelNumber;
-        this.brandId = brandId;
+        this.oBrand = oBrand;
     }
 
     public int getVehicleId() {
-        return VehicleId;
+        return vehicleId;
     }
 
-    public void setVehicleId(int VehicleId) {
-        this.VehicleId = VehicleId;
+    public void setVehicleId(int vehicleId) {
+        this.vehicleId = vehicleId;
+    }
+
+    public Brand getoBrand() {
+        return oBrand;
+    }
+
+    public void setoBrand(Brand oBrand) {
+        this.oBrand = oBrand;
     }
 
     public String getName() {
@@ -49,13 +57,4 @@ public class Vehicle {
     public void setModelNumber(String modelNumber) {
         this.modelNumber = modelNumber;
     }
-
-    public Brand getBrandId() {
-        return brandId;
-    }
-
-    public void setBrandId(Brand brandId) {
-        this.brandId = brandId;
-    }
-
 }
