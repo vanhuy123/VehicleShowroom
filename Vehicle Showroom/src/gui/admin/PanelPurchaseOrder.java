@@ -26,12 +26,7 @@ public class PanelPurchaseOrder extends javax.swing.JPanel {
      */
     public PanelPurchaseOrder() {
         initComponents();
-        Home.puchaseOrder = new bean.PurchaseOrder();
-        Home.puchaseOrder.setUser(Login.acc);
-        Date today = new Date(System.currentTimeMillis());
-//        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
-        Home.puchaseOrder.setPurchaseDate(today);
-        Home.puchaseOrder.setStatus(false);
+        AddPurchaseOrder();
         modelListProduct = new DefaultTableModel();
         modelListProduct.addColumn("Id");
         modelListProduct.addColumn("Name");
@@ -54,6 +49,15 @@ public class PanelPurchaseOrder extends javax.swing.JPanel {
         tblListProduct.setModel(modelListProduct);
         TableColumn column = tblListProduct.getColumnModel().getColumn(0);
         column.setPreferredWidth(15);
+    }
+    
+    private void AddPurchaseOrder(){
+        Home.puchaseOrder = new bean.PurchaseOrder();
+        Home.puchaseOrder.setUser(Login.acc);
+        Date today = new Date(System.currentTimeMillis());
+//        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+        Home.puchaseOrder.setPurchaseDate(today);
+        Home.puchaseOrder.setStatus(false);
     }
 
     /**

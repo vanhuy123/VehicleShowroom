@@ -7,11 +7,29 @@ package gui.admin;
 
 import bean.PurchaseOrderDetails;
 import bean.Vehicle;
-import gui.Home;
+import com.sun.org.apache.bcel.internal.generic.AALOAD;
 import static gui.admin.PanelPurchaseOrder.modelListProduct;
-import java.util.ArrayList;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFileChooser;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.plaf.FileChooserUI;
+import util.DBUtility;
 
 /**
  *
@@ -19,12 +37,44 @@ import javax.swing.JOptionPane;
  */
 public class AddProductDialog extends javax.swing.JDialog {
 
+    private Connection con;
+
     /**
      * Creates new form AddProductDialog
      */
     public AddProductDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        con = DBUtility.getConnection();
+        AddCbbBrand();
+        AddCbbColor();
+    }
+
+    private void AddCbbBrand() {
+        cbbBrand.removeAllItems();
+        try {
+            PreparedStatement pstmt = con.prepareStatement("SELECT * FROM Brand ORDER BY BrandId");
+            ResultSet resultSet = pstmt.executeQuery();
+            if (!resultSet.wasNull()) {
+                while (resultSet.next()) {
+                    cbbBrand.addItem(resultSet.getString(2));
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(AddProductDialog.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void AddCbbColor() {
+        cbbColor.removeAllItems();
+        cbbColor.addItem("Black");
+        cbbColor.addItem("Red");
+        cbbColor.addItem("Green");
+        cbbColor.addItem("Safia");
+        cbbColor.addItem("Blue");
+        cbbColor.addItem("Yellow");
+        cbbColor.addItem("Orange");
+        cbbColor.addItem("Gray");
     }
 
     /**
@@ -79,15 +129,19 @@ public class AddProductDialog extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         txtLength.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
+        txtLength.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         txtSpeed.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
+        txtSpeed.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         txtSeat.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
+        txtSeat.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel10.setText("Width:");
 
         txtWidth.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
+        txtWidth.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel9.setText("Length:");
@@ -102,6 +156,7 @@ public class AddProductDialog extends javax.swing.JDialog {
         jLabel8.setText("Height:");
 
         txaDescription.setColumns(20);
+        txaDescription.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txaDescription.setRows(5);
         jScrollPane1.setViewportView(txaDescription);
 
@@ -116,11 +171,14 @@ public class AddProductDialog extends javax.swing.JDialog {
         jLabel7.setText("Weight:");
 
         txaRemarks.setColumns(20);
+        txaRemarks.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txaRemarks.setRows(5);
         jScrollPane2.setViewportView(txaRemarks);
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel6.setText("Image:");
+
+        txtImage.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel11.setText("Seat number:");
@@ -140,12 +198,25 @@ public class AddProductDialog extends javax.swing.JDialog {
         });
 
         txtQuantity.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
+        txtQuantity.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         txtFuelTank.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
+        txtFuelTank.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         txtHeight.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
+        txtHeight.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         btnBrowseImage.setText("Browse");
+        btnBrowseImage.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnBrowseImageMouseClicked(evt);
+            }
+        });
+        btnBrowseImage.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBrowseImageActionPerformed(evt);
+            }
+        });
 
         jLabel12.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel12.setText("FuelTank:");
@@ -169,19 +240,38 @@ public class AddProductDialog extends javax.swing.JDialog {
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel4.setText("Brand:");
 
+        txtModel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel3.setText("Model:");
 
-        cbbBrand.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        txtName.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
+        cbbBrand.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        cbbBrand.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbbBrand.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbbBrandActionPerformed(evt);
+            }
+        });
+
+        cbbColor.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         cbbColor.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbbColor.setToolTipText("");
+        cbbColor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbbColorActionPerformed(evt);
+            }
+        });
 
         txtWeight.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
+        txtWeight.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel5.setText("Speed");
 
         txtPrice.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
+        txtPrice.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -246,19 +336,13 @@ public class AddProductDialog extends javax.swing.JDialog {
                                 .addGap(2, 2, 2)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addGap(10, 10, 10)
-                                            .addComponent(txtFuelTank, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addGap(10, 10, 10)
-                                            .addComponent(txtQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addGap(10, 10, 10)
-                                            .addComponent(txtSpeed, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addComponent(txtFuelTank, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtSpeed, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(layout.createSequentialGroup()
-                                        .addGap(10, 10, 10)
                                         .addComponent(txtModel, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(0, 0, Short.MAX_VALUE)))
                                 .addGap(20, 20, 20))
@@ -377,6 +461,11 @@ public class AddProductDialog extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        FileInputStream fInput = null;
+        FileOutputStream fOutput = null;
+        Date today = new Date(System.currentTimeMillis());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyymmddhhmmss");
+        String format = dateFormat.format(today);
         String err = "";
         String name = txtName.getText().trim();
         String model = txtModel.getText().trim();
@@ -394,6 +483,7 @@ public class AddProductDialog extends javax.swing.JDialog {
         String strPrice = txtPrice.getText().trim();
         String strBrand = cbbBrand.getSelectedItem().toString().trim();
         String strColor = cbbColor.getSelectedItem().toString().trim();
+        String urlIamges = null;
         if (name.length() == 0) {
             err += "- Input Name\n";
         }
@@ -433,7 +523,40 @@ public class AddProductDialog extends javax.swing.JDialog {
         if (strSeat.length() == 0) {
             err += "- Input Seat number\n";
         }
+        double bytes = 0;
+        try {
+            File fRead = new File(txtImage.getText());
+            fInput = new FileInputStream(fRead);
+            urlIamges = "Images/" + format + "_" + fRead.getName();
+            fOutput = new FileOutputStream(urlIamges);
+            bytes = Math.ceil(fRead.length() / 1024 / 1024);
+            if (bytes > 10) {
+                err += "- File size must be less than 10MB";
+            }
+        } catch (FileNotFoundException ex) {
+            err += "- File not found";
+        } catch (IOException ex) {
+            Logger.getLogger(AddProductDialog.class.getName()).log(Level.SEVERE, null, ex);
+        }
         if (err.length() == 0) {
+
+            int size = (int) bytes + 100;
+            byte[] bs = new byte[size];
+            int length;
+            try {
+                while ((length = fInput.read(bs)) > 0) {
+                    fOutput.write(bs, 0, length);
+                }
+            } catch (IOException ex) {
+                Logger.getLogger(AddProductDialog.class.getName()).log(Level.SEVERE, null, ex);
+            } finally {
+                try {
+                    fInput.close();
+                    fOutput.close();
+                } catch (IOException ex) {
+                    Logger.getLogger(AddProductDialog.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
             float speed;
             float weight;
             float heigth;
@@ -452,9 +575,12 @@ public class AddProductDialog extends javax.swing.JDialog {
             seat = Integer.parseInt(strSeat);
             quantity = Integer.parseInt(strQuantity);
             price = Float.parseFloat(strPrice);
+            //them du lieu vao danh sach
             PurchaseOrderDetails purchaseOrderDetails = new PurchaseOrderDetails();
             purchaseOrderDetails.setPurchasePrice(price);
             purchaseOrderDetails.setQuantity(quantity);
+            purchaseOrderDetails.setoVehicle(new Vehicle(size, name, model, null));
+            
             Vehicle vehicle = new Vehicle();
             Vector v = new Vector();
             v.add(modelListProduct.getRowCount() + 1);
@@ -462,7 +588,7 @@ public class AddProductDialog extends javax.swing.JDialog {
             v.add(model);
             v.add(strBrand);
             v.add(speed);
-            v.add(image);
+            v.add(urlIamges);
             v.add(weight);
             v.add(desc);
             v.add(remarks);
@@ -505,6 +631,28 @@ public class AddProductDialog extends javax.swing.JDialog {
         cbbBrand.setSelectedIndex(0);
         cbbColor.setSelectedIndex(0);
     }//GEN-LAST:event_btnResetActionPerformed
+
+    private void cbbBrandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbBrandActionPerformed
+
+    }//GEN-LAST:event_cbbBrandActionPerformed
+
+    private void cbbColorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbColorActionPerformed
+
+    }//GEN-LAST:event_cbbColorActionPerformed
+
+    private void btnBrowseImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBrowseImageActionPerformed
+
+    }//GEN-LAST:event_btnBrowseImageActionPerformed
+
+    private void btnBrowseImageMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBrowseImageMouseClicked
+        JFileChooser chooser = new JFileChooser();
+
+        int select = chooser.showOpenDialog(this);
+        if (select == JFileChooser.APPROVE_OPTION) {
+            txtImage.setText(chooser.getSelectedFile().getPath());
+
+        }
+    }//GEN-LAST:event_btnBrowseImageMouseClicked
 
     /**
      * @param args the command line arguments
