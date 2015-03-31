@@ -201,13 +201,24 @@ public class PanelPurchaseOrder extends javax.swing.JPanel {
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
-        EditProductDialog d = new EditProductDialog(Home.homeFrame, true);
-        d.setLocationRelativeTo(Home.homeFrame);
-        d.setVisible(true);
+        if (tblListProduct.getSelectedRow() >= 0) {
+            int selectedRow = tblListProduct.getSelectedRow();
+            PurchaseOrderDetails pOD = listPurchaseOrderDetailses.get(selectedRow);
+            EditProductDialog d = new EditProductDialog(Home.homeFrame, true, pOD, selectedRow);
+            d.setLocationRelativeTo(Home.homeFrame);
+            d.setVisible(true);
+        }else {
+            Icon ic = new ImageIcon("src/Images/1427748459_Warning.png");
+            lblStatusPurchaseOrder.setIcon(ic);
+            lblStatusPurchaseOrder.setText("No row are selected.");
+        }
+//        int showConfirmDialog = JOptionPane.showConfirmDialog(scrListproduct, "Rows were modified. Do you want to reload table?");
+//        if(showConfirmDialog>0){
+//            tblListProduct.validate();
+//        }
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        JOptionPane.showMessageDialog(scrListproduct, tblListProduct.getSelectedRow());
         if (tblListProduct.getSelectedRow() >= 0) {
             int showConfirmDialog = JOptionPane.showConfirmDialog(scrListproduct, "Are you sure you want to permanently delete this row?");
             if (showConfirmDialog == 0) {

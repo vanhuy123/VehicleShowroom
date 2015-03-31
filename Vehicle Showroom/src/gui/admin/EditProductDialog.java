@@ -37,16 +37,26 @@ public class EditProductDialog extends javax.swing.JDialog {
 
     private Connection con;
     private Map<String, Integer> mapBrand;
+    private static PurchaseOrderDetails pOD;
+    private static int index;
 
     /**
      * Creates new form AddProductDialog
+     *
+     * @param parent
+     * @param pOD
+     * @param modal
+     * @param index
      */
-    public EditProductDialog(java.awt.Frame parent, boolean modal) {
+    public EditProductDialog(java.awt.Frame parent, boolean modal, PurchaseOrderDetails pOD, int index) {
         super(parent, modal);
         initComponents();
+        EditProductDialog.pOD = pOD;
+        EditProductDialog.index = index;
         con = DBUtility.getConnection();
         AddCbbBrand();
         AddCbbColor();
+        InitField();
     }
 
     private void AddCbbBrand() {
@@ -77,23 +87,22 @@ public class EditProductDialog extends javax.swing.JDialog {
         cbbColor.addItem("Orange");
         cbbColor.addItem("Gray");
     }
-    
-    private void InitField(){
-        
-        txtName.setText("");
-        txtModel.setText("");
-        txtSpeed.setText("");
+
+    private void InitField() {
+        txtName.setText(pOD.getoVehicle().getName());
+        txtModel.setText(pOD.getoVehicle().getModel());
+        txtSpeed.setText(pOD.getoVehicle().getSpeed() + "");
         txtPrice.setText("");
-        txtHeight.setText("");
-        txtWeight.setText("");
-        txtWidth.setText("");
-        txtLength.setText("");
-        txtFuelTank.setText("");
-        txtQuantity.setText("");
-        txtSeat.setText("");
-        txaDescription.setText("");
+        txtHeight.setText(pOD.getoVehicle().getOverallHeight() + "");
+        txtWeight.setText(pOD.getoVehicle().getWeight() + "");
+        txtWidth.setText(pOD.getoVehicle().getOverallWidth() + "");
+        txtLength.setText(pOD.getoVehicle().getOverallLength() + "");
+        txtFuelTank.setText(pOD.getoVehicle().getFuelTank() + "");
+        txtQuantity.setText(pOD.getQuantity() + "");
+        txtSeat.setText(pOD.getoVehicle().getSeatingCapacity() + "");
+        txaDescription.setText(pOD.getoVehicle().getDescription());
         txaRemarks.setText("");
-        txtImage.setText("");
+        txtImage.setText(pOD.getoVehicle().getImage());
         cbbBrand.setSelectedIndex(0);
         cbbColor.setSelectedIndex(0);
     }
@@ -563,10 +572,10 @@ public class EditProductDialog extends javax.swing.JDialog {
 
             int size = (int) bytes + 100;
             byte[] bs = new byte[size];
-            int length;
+            int lengthStr;
             try {
-                while ((length = fInput.read(bs)) > 0) {
-                    fOutput.write(bs, 0, length);
+                while ((lengthStr = fInput.read(bs)) > 0) {
+                    fOutput.write(bs, 0, lengthStr);
                 }
             } catch (IOException ex) {
                 Logger.getLogger(EditProductDialog.class.getName()).log(Level.SEVERE, null, ex);
@@ -582,7 +591,7 @@ public class EditProductDialog extends javax.swing.JDialog {
             float weight;
             float heigth;
             float width;
-            float lenght;
+            float length;
             float fuelTank;
             float price;
             int seat;
@@ -591,7 +600,7 @@ public class EditProductDialog extends javax.swing.JDialog {
             weight = Float.parseFloat(strWeight);
             heigth = Float.parseFloat(strHeigth);
             width = Float.parseFloat(strWidth);
-            lenght = Float.parseFloat(strLenght);
+            length = Float.parseFloat(strLenght);
             fuelTank = Float.parseFloat(strFuelTank);
             seat = Integer.parseInt(strSeat);
             quantity = Integer.parseInt(strQuantity);
@@ -604,34 +613,30 @@ public class EditProductDialog extends javax.swing.JDialog {
                     break;
                 }
             }
-            PurchaseOrderDetails purchaseOrderDetails = new PurchaseOrderDetails();
-            purchaseOrderDetails.setPurchasePrice(price);
-            purchaseOrderDetails.setQuantity(quantity);
-            purchaseOrderDetails.setoVehicle(new Vehicle(name, image, model, speed,
-                    weight, desc, heigth, width, lenght, seat,
-                    fuelTank, new Brand( brandId, (String) cbbBrand.getSelectedItem())));
-            PanelPurchaseOrder.listPurchaseOrderDetailses.add(purchaseOrderDetails);
-            Vector v = new Vector();
-            v.add(modelListProduct.getRowCount() + 1);
-            v.add(name);
-            v.add(model);
-            v.add(strBrand);
-            v.add(speed);
-            v.add(urlIamges);
-            v.add(weight);
-            v.add(desc);
-            v.add(remarks);
-            v.add(heigth);
-            v.add(width);
-            v.add(lenght);
-            v.add(seat);
-            v.add(fuelTank);
-            v.add(strColor);
-            v.add(price);
-            v.add(quantity);
-            modelListProduct.addRow(v);
-            JOptionPane.showMessageDialog(null, "Add product success");
+            pOD.setPurchasePrice(price);
+            pOD.setQuantity(quantity);
+            pOD.setoVehicle(new Vehicle(name, image, model, speed,
+                    weight, desc, heigth, width, length, seat,
+                    fuelTank, new Brand(brandId, (String) cbbBrand.getSelectedItem())));
+            modelListProduct.setValueAt(name, index, 1);
+            modelListProduct.setValueAt(model, index, 2);
+            modelListProduct.setValueAt(cbbBrand.getSelectedItem(), index, 3);
+            modelListProduct.setValueAt(speed, index, 15);
+            modelListProduct.setValueAt(image, index, 14);
+            modelListProduct.setValueAt(weight, index, 6);
+            modelListProduct.setValueAt(desc, index, 12);
+            modelListProduct.setValueAt(remarks, index, 13);
+            modelListProduct.setValueAt(heigth, index, 5);
+            modelListProduct.setValueAt(width, index, 7);
+            modelListProduct.setValueAt(length, index, 8);
+            modelListProduct.setValueAt(seat, index, 11);
+            modelListProduct.setValueAt(fuelTank, index, 9);
+            modelListProduct.setValueAt(cbbColor.getSelectedItem(), index, 16);
+            modelListProduct.setValueAt(price, index, 4);
+            modelListProduct.setValueAt(quantity, index, 10);
+            JOptionPane.showMessageDialog(null, "Edit product success.");
             this.dispose();
+
         } else {
             JOptionPane.showMessageDialog(null, err);
         }
@@ -711,7 +716,7 @@ public class EditProductDialog extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                EditProductDialog dialog = new EditProductDialog(new javax.swing.JFrame(), true);
+                EditProductDialog dialog = new EditProductDialog(new javax.swing.JFrame(), true, pOD, index);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
