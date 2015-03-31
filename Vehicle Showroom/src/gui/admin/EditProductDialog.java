@@ -55,7 +55,6 @@ public class EditProductDialog extends javax.swing.JDialog {
         EditProductDialog.index = index;
         con = DBUtility.getConnection();
         AddCbbBrand();
-        AddCbbColor();
         InitField();
     }
 
@@ -76,18 +75,6 @@ public class EditProductDialog extends javax.swing.JDialog {
         }
     }
 
-    private void AddCbbColor() {
-        cbbColor.removeAllItems();
-        cbbColor.addItem("Black");
-        cbbColor.addItem("Red");
-        cbbColor.addItem("Green");
-        cbbColor.addItem("Safia");
-        cbbColor.addItem("Blue");
-        cbbColor.addItem("Yellow");
-        cbbColor.addItem("Orange");
-        cbbColor.addItem("Gray");
-    }
-
     private void InitField() {
         txtName.setText(pOD.getoVehicle().getName());
         txtModel.setText(pOD.getoVehicle().getModel());
@@ -102,9 +89,9 @@ public class EditProductDialog extends javax.swing.JDialog {
         txtSeat.setText(pOD.getoVehicle().getSeatingCapacity() + "");
         txaDescription.setText(pOD.getoVehicle().getDescription());
         txaRemarks.setText("");
+        txtColor.setText("");
         txtImage.setText(pOD.getoVehicle().getImage());
         cbbBrand.setSelectedIndex(0);
-        cbbColor.setSelectedIndex(0);
     }
 
     /**
@@ -151,10 +138,10 @@ public class EditProductDialog extends javax.swing.JDialog {
         jLabel3 = new javax.swing.JLabel();
         txtName = new javax.swing.JTextField();
         cbbBrand = new javax.swing.JComboBox();
-        cbbColor = new javax.swing.JComboBox();
         txtWeight = new javax.swing.JFormattedTextField();
         jLabel5 = new javax.swing.JLabel();
         txtPrice = new javax.swing.JFormattedTextField();
+        txtColor = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -190,7 +177,7 @@ public class EditProductDialog extends javax.swing.JDialog {
         txaDescription.setRows(5);
         jScrollPane1.setViewportView(txaDescription);
 
-        btnAdd.setText("Add");
+        btnAdd.setText("Update");
         btnAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAddActionPerformed(evt);
@@ -265,7 +252,7 @@ public class EditProductDialog extends javax.swing.JDialog {
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Addition product");
+        jLabel1.setText("EDIT PRODUCT");
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel4.setText("Brand:");
@@ -285,15 +272,6 @@ public class EditProductDialog extends javax.swing.JDialog {
             }
         });
 
-        cbbColor.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        cbbColor.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        cbbColor.setToolTipText("");
-        cbbColor.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbbColorActionPerformed(evt);
-            }
-        });
-
         txtWeight.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
         txtWeight.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
@@ -302,6 +280,9 @@ public class EditProductDialog extends javax.swing.JDialog {
 
         txtPrice.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
         txtPrice.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
+        txtColor.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
+        txtColor.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -325,7 +306,7 @@ public class EditProductDialog extends javax.swing.JDialog {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(cbbColor, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txtColor, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addComponent(cbbBrand, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -457,10 +438,10 @@ public class EditProductDialog extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(10, 10, 10)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
-                    .addComponent(cbbColor, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE))
-                .addGap(10, 10, 10)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtColor, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(9, 9, 9)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnBrowseImage, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
                     .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -512,7 +493,7 @@ public class EditProductDialog extends javax.swing.JDialog {
         String strQuantity = txtQuantity.getText().trim();
         String strPrice = txtPrice.getText().trim();
         String strBrand = cbbBrand.getSelectedItem().toString().trim();
-        String strColor = cbbColor.getSelectedItem().toString().trim();
+        String strColor = txtColor.getText();
         String urlIamges = null;
         if (name.length() == 0) {
             err += "- Input Name\n";
@@ -552,6 +533,9 @@ public class EditProductDialog extends javax.swing.JDialog {
         }
         if (strSeat.length() == 0) {
             err += "- Input Seat number\n";
+        }
+        if (strColor.length() == 0) {
+            err += "- Input Color\n";
         }
         double bytes = 0;
         try {
@@ -631,7 +615,7 @@ public class EditProductDialog extends javax.swing.JDialog {
             modelListProduct.setValueAt(length, index, 8);
             modelListProduct.setValueAt(seat, index, 11);
             modelListProduct.setValueAt(fuelTank, index, 9);
-            modelListProduct.setValueAt(cbbColor.getSelectedItem(), index, 16);
+            modelListProduct.setValueAt(strColor, index, 16);
             modelListProduct.setValueAt(price, index, 4);
             modelListProduct.setValueAt(quantity, index, 10);
             JOptionPane.showMessageDialog(null, "Edit product success.");
@@ -662,16 +646,12 @@ public class EditProductDialog extends javax.swing.JDialog {
         txaRemarks.setText("");
         txtImage.setText("");
         cbbBrand.setSelectedIndex(0);
-        cbbColor.setSelectedIndex(0);
+        txtColor.setText("");
     }//GEN-LAST:event_btnResetActionPerformed
 
     private void cbbBrandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbBrandActionPerformed
 
     }//GEN-LAST:event_cbbBrandActionPerformed
-
-    private void cbbColorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbColorActionPerformed
-
-    }//GEN-LAST:event_cbbColorActionPerformed
 
     private void btnBrowseImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBrowseImageActionPerformed
 
@@ -734,7 +714,6 @@ public class EditProductDialog extends javax.swing.JDialog {
     private javax.swing.JButton btnCancel;
     private javax.swing.JButton btnReset;
     private javax.swing.JComboBox cbbBrand;
-    private javax.swing.JComboBox cbbColor;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -756,6 +735,7 @@ public class EditProductDialog extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextArea txaDescription;
     private javax.swing.JTextArea txaRemarks;
+    private javax.swing.JFormattedTextField txtColor;
     private javax.swing.JFormattedTextField txtFuelTank;
     private javax.swing.JFormattedTextField txtHeight;
     private javax.swing.JTextField txtImage;

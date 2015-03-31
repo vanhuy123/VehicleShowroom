@@ -131,7 +131,7 @@ public class PanelPurchaseOrder extends javax.swing.JPanel {
         tblListProduct.setEditingColumn(0);
         tblListProduct.setEditingRow(0);
         tblListProduct.setMinimumSize(new java.awt.Dimension(80, 80));
-        tblListProduct.setPreferredSize(new java.awt.Dimension(1800, 900));
+        tblListProduct.setPreferredSize(new java.awt.Dimension(1600, 900));
         tblListProduct.setRowHeight(20);
         tblListProduct.setSurrendersFocusOnKeystroke(true);
         scrListproduct.setViewportView(tblListProduct);
@@ -230,7 +230,6 @@ public class PanelPurchaseOrder extends javax.swing.JPanel {
             lblStatusPurchaseOrder.setText("No row are selected.");
         }
     }//GEN-LAST:event_btnDeleteActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;

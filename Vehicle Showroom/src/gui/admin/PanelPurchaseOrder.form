@@ -168,7 +168,7 @@
               <Dimension value="[80, 80]"/>
             </Property>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-              <Dimension value="[1800, 900]"/>
+              <Dimension value="[1600, 900]"/>
             </Property>
             <Property name="rowHeight" type="int" value="20"/>
             <Property name="surrendersFocusOnKeystroke" type="boolean" value="true"/>
