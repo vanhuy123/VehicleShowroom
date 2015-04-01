@@ -8,6 +8,7 @@ package gui.admin;
 import bean.Brand;
 import bean.PurchaseOrderDetails;
 import bean.Vehicle;
+import bean.VehicleRegistration;
 import static gui.admin.PanelPurchaseOrder.modelListProduct;
 import java.io.File;
 import java.io.FileInputStream;
@@ -38,24 +39,43 @@ public class EditProductDialog extends javax.swing.JDialog {
     private Connection con;
     private Map<String, Integer> mapBrand;
     private static PurchaseOrderDetails pOD;
-    private static int index;
+    private static int selectedRow;
 
     /**
      * Creates new form AddProductDialog
      *
      * @param parent
-     * @param pOD
      * @param modal
-     * @param index
      */
-    public EditProductDialog(java.awt.Frame parent, boolean modal, PurchaseOrderDetails pOD, int index) {
+    public EditProductDialog(java.awt.Frame parent, boolean modal, PurchaseOrderDetails pOD, int selectedRow) {
         super(parent, modal);
         initComponents();
-        EditProductDialog.pOD = pOD;
-        EditProductDialog.index = index;
+        this.pOD = pOD;
         con = DBUtility.getConnection();
         AddCbbBrand();
-        InitField();
+        InitEditProduct();
+    }
+
+    private void InitEditProduct() {
+        VehicleRegistration registration = PanelPurchaseOrder.listVehicleRegistrations.get(selectedRow);
+        txtName.setText(pOD.getoVehicle().getName());
+        txtModel.setText(pOD.getoVehicle().getModel());
+        txtSpeed.setText(pOD.getoVehicle().getSpeed() + "");
+        txtPrice.setText(pOD.getPurchasePrice() + "");
+        txtHeight.setText(pOD.getoVehicle().getOverallHeight() + "");
+        txtWeight.setText(pOD.getoVehicle().getWeight() + "");
+        txtWidth.setText(pOD.getoVehicle().getOverallWidth() + "");
+        txtLength.setText(pOD.getoVehicle().getOverallLength() + "");
+        txtFuelTank.setText(pOD.getoVehicle().getFuelTank() + "");
+        txtQuantity.setText(pOD.getQuantity() + "");
+        txtSeat.setText(pOD.getoVehicle().getSeatingCapacity() + "");
+        txaDescription.setText(pOD.getoVehicle().getDescription());
+        txaRemarks.setText(registration.getRemarks());
+        txtImage.setText(pOD.getoVehicle().getImage());
+        txtSalePrice.setText(registration.getPrice() + "");
+        txtColor.setText(registration.getColor());
+        String strBrandValue = (String) modelListProduct.getValueAt(selectedRow, 3);
+        cbbBrand.setSelectedItem(strBrandValue);
     }
 
     private void AddCbbBrand() {
@@ -73,25 +93,6 @@ public class EditProductDialog extends javax.swing.JDialog {
         } catch (SQLException ex) {
             Logger.getLogger(EditProductDialog.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-
-    private void InitField() {
-        txtName.setText(pOD.getoVehicle().getName());
-        txtModel.setText(pOD.getoVehicle().getModel());
-        txtSpeed.setText(pOD.getoVehicle().getSpeed() + "");
-        txtPrice.setText("");
-        txtHeight.setText(pOD.getoVehicle().getOverallHeight() + "");
-        txtWeight.setText(pOD.getoVehicle().getWeight() + "");
-        txtWidth.setText(pOD.getoVehicle().getOverallWidth() + "");
-        txtLength.setText(pOD.getoVehicle().getOverallLength() + "");
-        txtFuelTank.setText(pOD.getoVehicle().getFuelTank() + "");
-        txtQuantity.setText(pOD.getQuantity() + "");
-        txtSeat.setText(pOD.getoVehicle().getSeatingCapacity() + "");
-        txaDescription.setText(pOD.getoVehicle().getDescription());
-        txaRemarks.setText("");
-        txtColor.setText("");
-        txtImage.setText(pOD.getoVehicle().getImage());
-        cbbBrand.setSelectedIndex(0);
     }
 
     /**
@@ -114,7 +115,7 @@ public class EditProductDialog extends javax.swing.JDialog {
         jLabel8 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         txaDescription = new javax.swing.JTextArea();
-        btnAdd = new javax.swing.JButton();
+        btnEdit = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         txaRemarks = new javax.swing.JTextArea();
@@ -141,7 +142,9 @@ public class EditProductDialog extends javax.swing.JDialog {
         txtWeight = new javax.swing.JFormattedTextField();
         jLabel5 = new javax.swing.JLabel();
         txtPrice = new javax.swing.JFormattedTextField();
-        txtColor = new javax.swing.JFormattedTextField();
+        txtColor = new javax.swing.JTextField();
+        jLabel19 = new javax.swing.JLabel();
+        txtSalePrice = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -155,38 +158,38 @@ public class EditProductDialog extends javax.swing.JDialog {
         txtSeat.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel10.setText("Width:");
+        jLabel10.setText("Width(cm):");
 
         txtWidth.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
         txtWidth.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel9.setText("Length:");
+        jLabel9.setText("Length(cm):");
 
         jLabel18.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel18.setText("Remarks:");
 
         jLabel17.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel17.setText("Price:");
+        jLabel17.setText("Price(USD):");
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel8.setText("Height:");
+        jLabel8.setText("Height(cm):");
 
         txaDescription.setColumns(20);
         txaDescription.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txaDescription.setRows(5);
         jScrollPane1.setViewportView(txaDescription);
 
-        btnAdd.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        btnAdd.setText("Update");
-        btnAdd.addActionListener(new java.awt.event.ActionListener() {
+        btnEdit.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnEdit.setText("Edit");
+        btnEdit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAddActionPerformed(evt);
+                btnEditActionPerformed(evt);
             }
         });
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel7.setText("Weight:");
+        jLabel7.setText("Weight(Kg):");
 
         txaRemarks.setColumns(20);
         txaRemarks.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -222,6 +225,11 @@ public class EditProductDialog extends javax.swing.JDialog {
 
         txtFuelTank.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
         txtFuelTank.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtFuelTank.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtFuelTankActionPerformed(evt);
+            }
+        });
 
         txtHeight.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
         txtHeight.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -240,7 +248,7 @@ public class EditProductDialog extends javax.swing.JDialog {
         });
 
         jLabel12.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel12.setText("FuelTank:");
+        jLabel12.setText("FuelTank(l):");
 
         jLabel13.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel13.setText("Quantity:");
@@ -256,7 +264,7 @@ public class EditProductDialog extends javax.swing.JDialog {
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("EDIT PRODUCT");
+        jLabel1.setText("ADIT PRODUCT");
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel4.setText("Brand:");
@@ -280,13 +288,22 @@ public class EditProductDialog extends javax.swing.JDialog {
         txtWeight.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel5.setText("Speed");
+        jLabel5.setText("Speed(m/s):");
 
         txtPrice.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
         txtPrice.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
-        txtColor.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
-        txtColor.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtColor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtColorActionPerformed(evt);
+            }
+        });
+
+        jLabel19.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel19.setText("Sale Price:");
+
+        txtSalePrice.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
+        txtSalePrice.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -294,7 +311,7 @@ public class EditProductDialog extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 618, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 21, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -306,11 +323,11 @@ public class EditProductDialog extends javax.swing.JDialog {
                         .addComponent(btnBrowseImage)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtColor, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txtColor))
                             .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addComponent(cbbBrand, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -337,40 +354,50 @@ public class EditProductDialog extends javax.swing.JDialog {
                                         .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(2, 2, 2)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel13, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(2, 2, 2)))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addGap(2, 2, 2)
+                                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(2, 2, 2)))
                                 .addGap(10, 10, 10)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(txtFuelTank, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(txtQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(txtSpeed, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(txtSpeed, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(txtModel, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(0, 0, Short.MAX_VALUE)))
                                 .addGap(20, 20, 20))
                             .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGap(2, 2, 2)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtHeight, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtLength, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jLabel13, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(txtHeight, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(txtLength, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(txtFuelTank, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGap(10, 10, 10)
+                                                .addComponent(txtQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(txtSalePrice, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btnReset, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -401,6 +428,21 @@ public class EditProductDialog extends javax.swing.JDialog {
                 .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtWeight, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(91, 91, 91)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(2, 2, 2)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(txtColor, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(10, 10, 10))
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -411,41 +453,33 @@ public class EditProductDialog extends javax.swing.JDialog {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(53, 53, 53))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(10, 10, 10)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtSalePrice, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(52, 52, 52)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(txtPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtWidth, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtLength, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(9, 9, 9)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(txtSeat, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtFuelTank, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(51, 51, 51))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(47, 47, 47)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtHeight, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txtWidth, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(txtFuelTank, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(10, 10, 10)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtSeat, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtLength, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtWeight, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(10, 10, 10)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtColor, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(9, 9, 9)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnBrowseImage, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
                     .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -466,7 +500,7 @@ public class EditProductDialog extends javax.swing.JDialog {
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnReset, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
@@ -475,7 +509,7 @@ public class EditProductDialog extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
         FileInputStream fInput = null;
         FileOutputStream fOutput = null;
         Date today = new Date(System.currentTimeMillis());
@@ -484,7 +518,6 @@ public class EditProductDialog extends javax.swing.JDialog {
         String err = "";
         String name = txtName.getText().trim();
         String model = txtModel.getText().trim();
-        String image = txtImage.getText().trim();
         String desc = txaDescription.getText().trim();
         String remarks = txaRemarks.getText().trim();
         String strSpeed = txtSpeed.getText().trim();
@@ -496,16 +529,17 @@ public class EditProductDialog extends javax.swing.JDialog {
         String strSeat = txtSeat.getText().trim();
         String strQuantity = txtQuantity.getText().trim();
         String strPrice = txtPrice.getText().trim();
+        String strColor = txtColor.getText().trim();
         String strBrand = cbbBrand.getSelectedItem().toString().trim();
-        String strColor = txtColor.getText();
-        String urlIamges = null;
+        String strImages = txtImage.getText().trim();
+        String strSalePrice = txtSalePrice.getText().trim();
         if (name.length() == 0) {
             err += "- Input Name\n";
         }
         if (model.length() == 0) {
             err += "- Input Model\n";
         }
-        if (image.length() == 0) {
+        if (strImages.length() == 0) {
             err += "- Input URL Image \n";
         }
         if (desc.length() == 0) {
@@ -519,6 +553,9 @@ public class EditProductDialog extends javax.swing.JDialog {
         }
         if (strPrice.length() == 0) {
             err += "- Input Price\n";
+        }
+        if (strSalePrice.length() == 0) {
+            err += "- Input Sale Price\n";
         }
         if (strWeight.length() == 0) {
             err += "- Input Weight\n";
@@ -542,14 +579,22 @@ public class EditProductDialog extends javax.swing.JDialog {
             err += "- Input Color\n";
         }
         double bytes = 0;
+        String urlImages = null;
         try {
-            File fRead = new File(txtImage.getText());
-            fInput = new FileInputStream(fRead);
-            urlIamges = "Images/" + format + "_" + fRead.getName();
-            fOutput = new FileOutputStream(urlIamges);
-            bytes = Math.ceil(fRead.length() / 1024 / 1024);
-            if (bytes > 10) {
-                err += "- File size must be less than 10MB";
+            File fRead = new File(strImages);
+            if (fRead.getName().endsWith(".jpg")
+                    || fRead.getName().endsWith(".png")
+                    || fRead.getName().endsWith(".jpeg")
+                    || fRead.getName().endsWith(".gif")) {
+                fInput = new FileInputStream(fRead);
+                urlImages = "Images/" + format + "_" + fRead.getName();
+                fOutput = new FileOutputStream(urlImages);
+                bytes = Math.ceil(fRead.length() / 1024 / 1024);
+                if (bytes > 10) {
+                    err += "- File size must be less than 10MB";
+                }
+            } else {
+                err += "- File is not image";
             }
         } catch (FileNotFoundException ex) {
             err += "- File not found";
@@ -560,10 +605,10 @@ public class EditProductDialog extends javax.swing.JDialog {
 
             int size = (int) bytes + 100;
             byte[] bs = new byte[size];
-            int lengthStr;
+            int length;
             try {
-                while ((lengthStr = fInput.read(bs)) > 0) {
-                    fOutput.write(bs, 0, lengthStr);
+                while ((length = fInput.read(bs)) > 0) {
+                    fOutput.write(bs, 0, length);
                 }
             } catch (IOException ex) {
                 Logger.getLogger(EditProductDialog.class.getName()).log(Level.SEVERE, null, ex);
@@ -579,20 +624,22 @@ public class EditProductDialog extends javax.swing.JDialog {
             float weight;
             float heigth;
             float width;
-            float length;
+            float lenght;
             float fuelTank;
             float price;
+            float salePrice;
             int seat;
             int quantity;
             speed = Float.parseFloat(strSpeed);
             weight = Float.parseFloat(strWeight);
             heigth = Float.parseFloat(strHeigth);
             width = Float.parseFloat(strWidth);
-            length = Float.parseFloat(strLenght);
+            lenght = Float.parseFloat(strLenght);
             fuelTank = Float.parseFloat(strFuelTank);
             seat = Integer.parseInt(strSeat);
             quantity = Integer.parseInt(strQuantity);
             price = Float.parseFloat(strPrice);
+            salePrice = Float.parseFloat(strSalePrice);
             //them du lieu vao danh sach
             int brandId = 0;
             for (String str : mapBrand.keySet()) {
@@ -601,34 +648,43 @@ public class EditProductDialog extends javax.swing.JDialog {
                     break;
                 }
             }
-            pOD.setPurchasePrice(price);
-            pOD.setQuantity(quantity);
-            pOD.setoVehicle(new Vehicle(name, image, model, speed,
-                    weight, desc, heigth, width, length, seat,
+            VehicleRegistration vehicleRegistration = new VehicleRegistration();
+            vehicleRegistration.setRemarks(remarks);
+            vehicleRegistration.setColor(strColor);
+            vehicleRegistration.setPrice(salePrice);
+            PurchaseOrderDetails purchaseOrderDetails = new PurchaseOrderDetails();
+            purchaseOrderDetails.setPurchasePrice(price);
+            purchaseOrderDetails.setQuantity(quantity);
+            purchaseOrderDetails.setoVehicle(new Vehicle(name, urlImages, model, speed,
+                    weight, desc, heigth, width, lenght, seat,
                     fuelTank, new Brand(brandId, (String) cbbBrand.getSelectedItem())));
-            modelListProduct.setValueAt(name, index, 1);
-            modelListProduct.setValueAt(model, index, 2);
-            modelListProduct.setValueAt(cbbBrand.getSelectedItem(), index, 3);
-            modelListProduct.setValueAt(speed, index, 15);
-            modelListProduct.setValueAt(image, index, 14);
-            modelListProduct.setValueAt(weight, index, 6);
-            modelListProduct.setValueAt(desc, index, 12);
-            modelListProduct.setValueAt(remarks, index, 13);
-            modelListProduct.setValueAt(heigth, index, 5);
-            modelListProduct.setValueAt(width, index, 7);
-            modelListProduct.setValueAt(length, index, 8);
-            modelListProduct.setValueAt(seat, index, 11);
-            modelListProduct.setValueAt(fuelTank, index, 9);
-            modelListProduct.setValueAt(strColor, index, 16);
-            modelListProduct.setValueAt(price, index, 4);
-            modelListProduct.setValueAt(quantity, index, 10);
-            JOptionPane.showMessageDialog(null, "Edit product success.");
+            PanelPurchaseOrder.listPurchaseOrderDetailses.add(purchaseOrderDetails);
+            Vector v = new Vector();
+            v.add(modelListProduct.getRowCount() + 1);
+            v.add(name);
+            v.add(model);
+            v.add(strBrand);
+            v.add(speed);
+            v.add(strImages);
+            v.add(weight);
+            v.add(desc);
+            v.add(remarks);
+            v.add(heigth);
+            v.add(width);
+            v.add(lenght);
+            v.add(seat);
+            v.add(fuelTank);
+            v.add(strColor);
+            v.add(price);
+            v.add(salePrice);
+            v.add(quantity);
+            modelListProduct.addRow(v);
+            JOptionPane.showMessageDialog(null, "Add product success");
             this.dispose();
-
         } else {
             JOptionPane.showMessageDialog(null, err);
         }
-    }//GEN-LAST:event_btnAddActionPerformed
+    }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
         this.dispose();
@@ -639,6 +695,7 @@ public class EditProductDialog extends javax.swing.JDialog {
         txtModel.setText("");
         txtSpeed.setText("");
         txtPrice.setText("");
+        txtSalePrice.setText("");
         txtHeight.setText("");
         txtWeight.setText("");
         txtWidth.setText("");
@@ -649,8 +706,8 @@ public class EditProductDialog extends javax.swing.JDialog {
         txaDescription.setText("");
         txaRemarks.setText("");
         txtImage.setText("");
-        cbbBrand.setSelectedIndex(0);
         txtColor.setText("");
+        cbbBrand.setSelectedIndex(0);
     }//GEN-LAST:event_btnResetActionPerformed
 
     private void cbbBrandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbBrandActionPerformed
@@ -668,6 +725,14 @@ public class EditProductDialog extends javax.swing.JDialog {
             txtImage.setText(chooser.getSelectedFile().getPath());
         }
     }//GEN-LAST:event_btnBrowseImageMouseClicked
+
+    private void txtColorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtColorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtColorActionPerformed
+
+    private void txtFuelTankActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFuelTankActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtFuelTankActionPerformed
 
     /**
      * @param args the command line arguments
@@ -700,7 +765,7 @@ public class EditProductDialog extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                EditProductDialog dialog = new EditProductDialog(new javax.swing.JFrame(), true, pOD, index);
+                EditProductDialog dialog = new EditProductDialog(new javax.swing.JFrame(), true, pOD, selectedRow);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -713,9 +778,9 @@ public class EditProductDialog extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnBrowseImage;
     private javax.swing.JButton btnCancel;
+    private javax.swing.JButton btnEdit;
     private javax.swing.JButton btnReset;
     private javax.swing.JComboBox cbbBrand;
     private javax.swing.JLabel jLabel1;
@@ -727,6 +792,7 @@ public class EditProductDialog extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -739,7 +805,7 @@ public class EditProductDialog extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextArea txaDescription;
     private javax.swing.JTextArea txaRemarks;
-    private javax.swing.JFormattedTextField txtColor;
+    private javax.swing.JTextField txtColor;
     private javax.swing.JFormattedTextField txtFuelTank;
     private javax.swing.JFormattedTextField txtHeight;
     private javax.swing.JTextField txtImage;
@@ -748,6 +814,7 @@ public class EditProductDialog extends javax.swing.JDialog {
     private javax.swing.JTextField txtName;
     private javax.swing.JFormattedTextField txtPrice;
     private javax.swing.JFormattedTextField txtQuantity;
+    private javax.swing.JFormattedTextField txtSalePrice;
     private javax.swing.JFormattedTextField txtSeat;
     private javax.swing.JFormattedTextField txtSpeed;
     private javax.swing.JFormattedTextField txtWeight;

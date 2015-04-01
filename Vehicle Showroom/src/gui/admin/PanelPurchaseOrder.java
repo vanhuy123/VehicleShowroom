@@ -7,6 +7,7 @@ package gui.admin;
 
 import bean.PurchaseOrder;
 import bean.PurchaseOrderDetails;
+import bean.VehicleRegistration;
 import gui.Home;
 import gui.Login;
 import java.util.ArrayList;
@@ -26,7 +27,7 @@ public class PanelPurchaseOrder extends javax.swing.JPanel {
 
     public static DefaultTableModel modelListProduct;
     public static ArrayList<PurchaseOrderDetails> listPurchaseOrderDetailses;
-    public static ArrayList<Pu> ;
+    public static ArrayList<VehicleRegistration> listVehicleRegistrations;
     public PurchaseOrder purchaseOrder;
 
     /**
@@ -52,6 +53,7 @@ public class PanelPurchaseOrder extends javax.swing.JPanel {
         modelListProduct.addColumn("FuelTank");
         modelListProduct.addColumn("Color");
         modelListProduct.addColumn("Price");
+        modelListProduct.addColumn("SalePrice");
         modelListProduct.addColumn("Quantity");
         tblListProduct.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         tblListProduct.setModel(modelListProduct);
@@ -66,6 +68,7 @@ public class PanelPurchaseOrder extends javax.swing.JPanel {
         purchaseOrder.setPurchaseDate(today);
         purchaseOrder.setStatus(false);
         listPurchaseOrderDetailses = new ArrayList<>();
+        listVehicleRegistrations = new ArrayList<>();
     }
 
     /**
