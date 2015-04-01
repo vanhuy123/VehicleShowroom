@@ -177,6 +177,7 @@ public class EditProductDialog extends javax.swing.JDialog {
         txaDescription.setRows(5);
         jScrollPane1.setViewportView(txaDescription);
 
+        btnAdd.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnAdd.setText("Update");
         btnAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -200,6 +201,7 @@ public class EditProductDialog extends javax.swing.JDialog {
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel11.setText("Seat number:");
 
+        btnCancel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnCancel.setText("Cancel");
         btnCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -207,6 +209,7 @@ public class EditProductDialog extends javax.swing.JDialog {
             }
         });
 
+        btnReset.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnReset.setText("Reset");
         btnReset.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -223,6 +226,7 @@ public class EditProductDialog extends javax.swing.JDialog {
         txtHeight.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
         txtHeight.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
+        btnBrowseImage.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnBrowseImage.setText("Browse");
         btnBrowseImage.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {

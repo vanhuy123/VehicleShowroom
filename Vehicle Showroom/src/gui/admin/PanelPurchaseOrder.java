@@ -26,6 +26,7 @@ public class PanelPurchaseOrder extends javax.swing.JPanel {
 
     public static DefaultTableModel modelListProduct;
     public static ArrayList<PurchaseOrderDetails> listPurchaseOrderDetailses;
+    public static ArrayList<Pu> ;
     public PurchaseOrder purchaseOrder;
 
     /**
