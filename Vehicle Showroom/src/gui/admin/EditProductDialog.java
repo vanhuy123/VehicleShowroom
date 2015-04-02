@@ -51,6 +51,7 @@ public class EditProductDialog extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         this.pOD = pOD;
+        this.selectedRow = selectedRow;
         con = DBUtility.getConnection();
         AddCbbBrand();
         InitEditProduct();
@@ -71,10 +72,11 @@ public class EditProductDialog extends javax.swing.JDialog {
         txtSeat.setText(pOD.getoVehicle().getSeatingCapacity() + "");
         txaDescription.setText(pOD.getoVehicle().getDescription());
         txaRemarks.setText(registration.getRemarks());
-        txtImage.setText(pOD.getoVehicle().getImage());
+        txtImage.setText((String) modelListProduct.getValueAt(selectedRow, 5));
         txtSalePrice.setText(registration.getPrice() + "");
         txtColor.setText(registration.getColor());
         String strBrandValue = (String) modelListProduct.getValueAt(selectedRow, 3);
+        JOptionPane.showMessageDialog(null, strBrandValue);
         cbbBrand.setSelectedItem(strBrandValue);
     }
 
@@ -661,42 +663,25 @@ public class EditProductDialog extends javax.swing.JDialog {
                     fuelTank, new Brand(brandId, (String) cbbBrand.getSelectedItem())));
             PanelPurchaseOrder.listPurchaseOrderDetailses.add(purchaseOrderDetails);
             PanelPurchaseOrder.listPurchaseOrderDetailses.set(selectedRow, purchaseOrderDetails);
-            Vector v = new Vector();
-            v.add(name);
+            //sua du lieu
             modelListProduct.setValueAt(name, selectedRow, 1);
-            v.add(model);
             modelListProduct.setValueAt(model, selectedRow, 2);
-            v.add(strBrand);
             modelListProduct.setValueAt(strBrand, selectedRow, 3);
-            v.add(speed);
             modelListProduct.setValueAt(speed, selectedRow, 4);
-            v.add(strImages);
             modelListProduct.setValueAt(strImages, selectedRow, 5);
-            v.add(weight);
             modelListProduct.setValueAt(weight, selectedRow, 6);
-            v.add(desc);
             modelListProduct.setValueAt(desc, selectedRow, 7);
-            v.add(remarks);
             modelListProduct.setValueAt(remarks, selectedRow, 8);
-            v.add(heigth);
             modelListProduct.setValueAt(heigth, selectedRow, 9);
-            v.add(width);
             modelListProduct.setValueAt(width, selectedRow, 10);
-            v.add(lenght);
             modelListProduct.setValueAt(lenght, selectedRow, 11);
-            v.add(seat);
             modelListProduct.setValueAt(seat, selectedRow, 12);
-            v.add(fuelTank);
             modelListProduct.setValueAt(fuelTank, selectedRow, 13);
-            v.add(strColor);
             modelListProduct.setValueAt(strColor, selectedRow, 14);
-            v.add(price);
             modelListProduct.setValueAt(price, selectedRow, 15);
-            v.add(salePrice);
             modelListProduct.setValueAt(salePrice, selectedRow, 16);
-            v.add(quantity);
             modelListProduct.setValueAt(quantity, selectedRow, 17);
-            JOptionPane.showMessageDialog(null, "Add product success");
+            JOptionPane.showMessageDialog(null, "Update product success!");
             this.dispose();
         } else {
             JOptionPane.showMessageDialog(null, err);

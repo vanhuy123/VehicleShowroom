@@ -10,14 +10,22 @@ import bean.PurchaseOrderDetails;
 import bean.VehicleRegistration;
 import gui.Home;
 import gui.Login;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
+import util.DBUtility;
 
 /**
  *
@@ -25,6 +33,7 @@ import javax.swing.table.TableColumn;
  */
 public class PanelPurchaseOrder extends javax.swing.JPanel {
 
+    private Connection con = DBUtility.getConnection();
     public static DefaultTableModel modelListProduct;
     public static ArrayList<PurchaseOrderDetails> listPurchaseOrderDetailses;
     public static ArrayList<VehicleRegistration> listVehicleRegistrations;
@@ -116,6 +125,11 @@ public class PanelPurchaseOrder extends javax.swing.JPanel {
 
         btnFinish.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnFinish.setText("Finish");
+        btnFinish.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFinishActionPerformed(evt);
+            }
+        });
 
         scrListproduct.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
         scrListproduct.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
@@ -211,7 +225,7 @@ public class PanelPurchaseOrder extends javax.swing.JPanel {
             EditProductDialog d = new EditProductDialog(Home.homeFrame, true, pOD, selectedRow);
             d.setLocationRelativeTo(Home.homeFrame);
             d.setVisible(true);
-        }else {
+        } else {
             Icon ic = new ImageIcon("src/Images/1427748459_Warning.png");
             lblStatusPurchaseOrder.setIcon(ic);
             lblStatusPurchaseOrder.setText("No row are selected.");
@@ -226,7 +240,10 @@ public class PanelPurchaseOrder extends javax.swing.JPanel {
         if (tblListProduct.getSelectedRow() >= 0) {
             int showConfirmDialog = JOptionPane.showConfirmDialog(scrListproduct, "Are you sure you want to permanently delete this row?");
             if (showConfirmDialog == 0) {
-                modelListProduct.removeRow(tblListProduct.getSelectedRow());
+                int selectedRow = tblListProduct.getSelectedRow();
+                modelListProduct.removeRow(selectedRow);
+                listPurchaseOrderDetailses.remove(selectedRow);
+                listVehicleRegistrations.remove(selectedRow);
             }
         } else {
             Icon ic = new ImageIcon("src/Images/1427748459_Warning.png");
@@ -235,6 +252,42 @@ public class PanelPurchaseOrder extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnDeleteActionPerformed
 
+    private void btnFinishActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinishActionPerformed
+        int InsertDBPurchaseOrder = InsertDBPurchaseOrder(purchaseOrder.getUser().getUserId(), purchaseOrder.getPurchaseDate(), purchaseOrder.isStatus());
+        JOptionPane.showMessageDialog(scrListproduct, InsertDBPurchaseOrder);
+    }//GEN-LAST:event_btnFinishActionPerformed
+
+    private int InsertDBPurchaseOrder(int userId, Date date, boolean status) {
+        int id = 0;
+        PreparedStatement pstmt = null;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        String format = dateFormat.format(date);
+        try {
+            String str = "INSERT INTO [dbo].[PurchaseOrder] ([UserId],[PurchaseDate],[Status])"
+                    + "VALUES(?,?,?)";
+            pstmt = con.prepareStatement(str);
+            pstmt.setInt(1, userId);
+            pstmt.setString(2, format);
+            pstmt.setBoolean(3, status);
+            int i = pstmt.executeUpdate();
+
+            String selectId = "SELECT TOP 1 [PurchaseId]\n"
+                    + "  FROM [Vehicle].[dbo].[PurchaseOrder]\n"
+                    + "  ORDER BY PurchaseId DESC";
+            pstmt = con.prepareStatement(selectId);
+            ResultSet rs = pstmt.executeQuery();
+            if (!rs.wasNull()) {
+                while (rs.next()) {
+                    id = rs.getInt("PurchaseId");
+                }
+            } else {
+                JOptionPane.showMessageDialog(scrListproduct, "DMK");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PanelPurchaseOrder.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return id;
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnDelete;

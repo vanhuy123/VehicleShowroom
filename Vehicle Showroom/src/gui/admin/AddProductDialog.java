@@ -486,12 +486,11 @@ public class AddProductDialog extends javax.swing.JDialog {
         FileInputStream fInput = null;
         FileOutputStream fOutput = null;
         Date today = new Date(System.currentTimeMillis());
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyymmddhhmmss");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddhhmmss");
         String format = dateFormat.format(today);
         String err = "";
         String name = txtName.getText().trim();
         String model = txtModel.getText().trim();
-        String image = txtImage.getText().trim();
         String desc = txaDescription.getText().trim();
         String remarks = txaRemarks.getText().trim();
         String strSpeed = txtSpeed.getText().trim();
@@ -505,7 +504,7 @@ public class AddProductDialog extends javax.swing.JDialog {
         String strPrice = txtPrice.getText().trim();
         String strColor = txtColor.getText().trim();
         String strBrand = cbbBrand.getSelectedItem().toString().trim();
-        String urlIamges = txtImage.getText().trim();
+        String urlImages = txtImage.getText().trim();
         String strSalePrice = txtSalePrice.getText().trim();
         if (name.length() == 0) {
             err += "- Input Name\n";
@@ -513,7 +512,7 @@ public class AddProductDialog extends javax.swing.JDialog {
         if (model.length() == 0) {
             err += "- Input Model\n";
         }
-        if (urlIamges.length() == 0) {
+        if (urlImages.length() == 0) {
             err += "- Input URL Image \n";
         }
         if (desc.length() == 0) {
@@ -553,6 +552,7 @@ public class AddProductDialog extends javax.swing.JDialog {
             err += "- Input Color\n";
         }
         double bytes = 0;
+        String urlImg = null;
         try {
             File fRead = new File(txtImage.getText());
             if (fRead.getName().endsWith(".jpg")
@@ -560,8 +560,8 @@ public class AddProductDialog extends javax.swing.JDialog {
                     || fRead.getName().endsWith(".jpeg")
                     || fRead.getName().endsWith(".gif")) {
                 fInput = new FileInputStream(fRead);
-                urlIamges = "Images/" + format + "_" + fRead.getName();
-                fOutput = new FileOutputStream(urlIamges);
+                urlImg = "Images/" + format + "_" + fRead.getName();
+                fOutput = new FileOutputStream(urlImg);
                 bytes = Math.ceil(fRead.length() / 1024 / 1024);
                 if (bytes > 10) {
                     err += "- File size must be less than 10MB";
@@ -629,7 +629,7 @@ public class AddProductDialog extends javax.swing.JDialog {
             PurchaseOrderDetails purchaseOrderDetails = new PurchaseOrderDetails();
             purchaseOrderDetails.setPurchasePrice(price);
             purchaseOrderDetails.setQuantity(quantity);
-            purchaseOrderDetails.setoVehicle(new Vehicle(name, image, model, speed,
+            purchaseOrderDetails.setoVehicle(new Vehicle(name, urlImg, model, speed,
                     weight, desc, heigth, width, lenght, seat,
                     fuelTank, new Brand(brandId, (String) cbbBrand.getSelectedItem())));
             PanelPurchaseOrder.listPurchaseOrderDetailses.add(purchaseOrderDetails);
@@ -639,7 +639,7 @@ public class AddProductDialog extends javax.swing.JDialog {
             v.add(model);
             v.add(strBrand);
             v.add(speed);
-            v.add(urlIamges);
+            v.add(urlImages);
             v.add(weight);
             v.add(desc);
             v.add(remarks);
