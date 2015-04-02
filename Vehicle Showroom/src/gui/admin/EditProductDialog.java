@@ -181,7 +181,7 @@ public class EditProductDialog extends javax.swing.JDialog {
         jScrollPane1.setViewportView(txaDescription);
 
         btnEdit.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        btnEdit.setText("Edit");
+        btnEdit.setText("Update");
         btnEdit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEditActionPerformed(evt);
@@ -652,6 +652,7 @@ public class EditProductDialog extends javax.swing.JDialog {
             vehicleRegistration.setRemarks(remarks);
             vehicleRegistration.setColor(strColor);
             vehicleRegistration.setPrice(salePrice);
+            PanelPurchaseOrder.listVehicleRegistrations.set(selectedRow, vehicleRegistration);
             PurchaseOrderDetails purchaseOrderDetails = new PurchaseOrderDetails();
             purchaseOrderDetails.setPurchasePrice(price);
             purchaseOrderDetails.setQuantity(quantity);
@@ -659,26 +660,42 @@ public class EditProductDialog extends javax.swing.JDialog {
                     weight, desc, heigth, width, lenght, seat,
                     fuelTank, new Brand(brandId, (String) cbbBrand.getSelectedItem())));
             PanelPurchaseOrder.listPurchaseOrderDetailses.add(purchaseOrderDetails);
+            PanelPurchaseOrder.listPurchaseOrderDetailses.set(selectedRow, purchaseOrderDetails);
             Vector v = new Vector();
-            v.add(modelListProduct.getRowCount() + 1);
             v.add(name);
+            modelListProduct.setValueAt(name, selectedRow, 1);
             v.add(model);
+            modelListProduct.setValueAt(model, selectedRow, 2);
             v.add(strBrand);
+            modelListProduct.setValueAt(strBrand, selectedRow, 3);
             v.add(speed);
+            modelListProduct.setValueAt(speed, selectedRow, 4);
             v.add(strImages);
+            modelListProduct.setValueAt(strImages, selectedRow, 5);
             v.add(weight);
+            modelListProduct.setValueAt(weight, selectedRow, 6);
             v.add(desc);
+            modelListProduct.setValueAt(desc, selectedRow, 7);
             v.add(remarks);
+            modelListProduct.setValueAt(remarks, selectedRow, 8);
             v.add(heigth);
+            modelListProduct.setValueAt(heigth, selectedRow, 9);
             v.add(width);
+            modelListProduct.setValueAt(width, selectedRow, 10);
             v.add(lenght);
+            modelListProduct.setValueAt(lenght, selectedRow, 11);
             v.add(seat);
+            modelListProduct.setValueAt(seat, selectedRow, 12);
             v.add(fuelTank);
+            modelListProduct.setValueAt(fuelTank, selectedRow, 13);
             v.add(strColor);
+            modelListProduct.setValueAt(strColor, selectedRow, 14);
             v.add(price);
+            modelListProduct.setValueAt(price, selectedRow, 15);
             v.add(salePrice);
+            modelListProduct.setValueAt(salePrice, selectedRow, 16);
             v.add(quantity);
-            modelListProduct.addRow(v);
+            modelListProduct.setValueAt(quantity, selectedRow, 17);
             JOptionPane.showMessageDialog(null, "Add product success");
             this.dispose();
         } else {
