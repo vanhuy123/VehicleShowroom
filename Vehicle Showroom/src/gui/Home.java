@@ -109,10 +109,12 @@ public class Home extends javax.swing.JFrame {
         btnWarehouse.setPreferredSize(new java.awt.Dimension(145, 40));
 
         btnSale.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnSale.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/label_sale green30.png"))); // NOI18N
         btnSale.setText("SALE");
         btnSale.setPreferredSize(new java.awt.Dimension(145, 40));
 
         btnPurchase.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnPurchase.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Purchase30.png"))); // NOI18N
         btnPurchase.setText("PURCHASE");
         btnPurchase.setPreferredSize(new java.awt.Dimension(145, 40));
         btnPurchase.addActionListener(new java.awt.event.ActionListener() {
@@ -129,7 +131,8 @@ public class Home extends javax.swing.JFrame {
 
         txtLogin.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtLogin.setForeground(new java.awt.Color(0, 0, 255));
-        txtLogin.setText("Log out");
+        txtLogin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/login30.png"))); // NOI18N
+        txtLogin.setText("Login");
         txtLogin.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 txtLoginMouseClicked(evt);
@@ -138,6 +141,7 @@ public class Home extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 0, 255));
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/userconfig (1).png"))); // NOI18N
         jLabel2.setText("User");
         jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -147,6 +151,7 @@ public class Home extends javax.swing.JFrame {
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 0, 255));
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Purchase30.png"))); // NOI18N
         jLabel3.setText("Purchase");
         jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -156,6 +161,7 @@ public class Home extends javax.swing.JFrame {
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(0, 0, 255));
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/register-icon30.png"))); // NOI18N
         jLabel4.setText("Registration");
         jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -165,6 +171,7 @@ public class Home extends javax.swing.JFrame {
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(0, 0, 255));
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/label_sale green30.png"))); // NOI18N
         jLabel5.setText("Sale order");
         jLabel5.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -174,6 +181,7 @@ public class Home extends javax.swing.JFrame {
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(0, 0, 255));
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/new-car-30.png"))); // NOI18N
         jLabel6.setText("Brand");
         jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -183,6 +191,7 @@ public class Home extends javax.swing.JFrame {
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(0, 0, 255));
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/customers30.png"))); // NOI18N
         jLabel7.setText("Customer");
         jLabel7.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -192,6 +201,7 @@ public class Home extends javax.swing.JFrame {
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(0, 0, 255));
+        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/logout 30.png"))); // NOI18N
         jLabel9.setText("Log out");
         jLabel9.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -201,6 +211,7 @@ public class Home extends javax.swing.JFrame {
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(0, 0, 255));
+        jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/search30.png"))); // NOI18N
         jLabel11.setText("Search");
         jLabel11.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -399,14 +410,14 @@ public class Home extends javax.swing.JFrame {
         jMenu4.setPreferredSize(new java.awt.Dimension(90, 35));
         jMenuBar1.add(jMenu4);
 
-        jMenu5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icon-sale.png"))); // NOI18N
+        jMenu5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/label_sale green30.png"))); // NOI18N
         jMenu5.setMnemonic('a');
         jMenu5.setText("Sale order");
         jMenu5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jMenu5.setPreferredSize(new java.awt.Dimension(100, 25));
         jMenuBar1.add(jMenu5);
 
-        jMenu6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icon-sale.png"))); // NOI18N
+        jMenu6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Purchase30.png"))); // NOI18N
         jMenu6.setMnemonic('P');
         jMenu6.setText("Purchase");
         jMenu6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
