@@ -658,7 +658,7 @@ public class EditProductDialog extends javax.swing.JDialog {
             PurchaseOrderDetails purchaseOrderDetails = new PurchaseOrderDetails();
             purchaseOrderDetails.setPurchasePrice(price);
             purchaseOrderDetails.setQuantity(quantity);
-            purchaseOrderDetails.setoVehicle(new Vehicle(name, urlImages, model, speed,
+            purchaseOrderDetails.setoVehicle(new Vehicle(1,name, urlImages, model, speed,
                     weight, desc, heigth, width, lenght, seat,
                     fuelTank, new Brand(brandId, (String) cbbBrand.getSelectedItem())));
             PanelPurchaseOrder.listPurchaseOrderDetailses.add(purchaseOrderDetails);

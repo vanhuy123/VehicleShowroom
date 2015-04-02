@@ -621,18 +621,20 @@ public class AddProductDialog extends javax.swing.JDialog {
                     break;
                 }
             }
+            PurchaseOrderDetails purchaseOrderDetails = new PurchaseOrderDetails();
+            purchaseOrderDetails.setPurchasePrice(price);
+            purchaseOrderDetails.setQuantity(quantity);
+            Vehicle vehicle = new Vehicle(1,name, urlImg, model, speed,
+                    weight, desc, heigth, width, lenght, seat,
+                    fuelTank, new Brand(brandId, (String) cbbBrand.getSelectedItem()));
+            purchaseOrderDetails.setoVehicle(vehicle);
+            PanelPurchaseOrder.listPurchaseOrderDetailses.add(purchaseOrderDetails);
             VehicleRegistration vehicleRegistration = new VehicleRegistration(1, null, null, price, remarks, strColor);
             vehicleRegistration.setRemarks(remarks);
             vehicleRegistration.setColor(strColor);
             vehicleRegistration.setPrice(salePrice);
+            vehicleRegistration.setoVehicle(vehicle);
             PanelPurchaseOrder.listVehicleRegistrations.add(vehicleRegistration);
-            PurchaseOrderDetails purchaseOrderDetails = new PurchaseOrderDetails();
-            purchaseOrderDetails.setPurchasePrice(price);
-            purchaseOrderDetails.setQuantity(quantity);
-            purchaseOrderDetails.setoVehicle(new Vehicle(name, urlImg, model, speed,
-                    weight, desc, heigth, width, lenght, seat,
-                    fuelTank, new Brand(brandId, (String) cbbBrand.getSelectedItem())));
-            PanelPurchaseOrder.listPurchaseOrderDetailses.add(purchaseOrderDetails);
             Vector v = new Vector();
             v.add(modelListProduct.getRowCount() + 1);
             v.add(name);

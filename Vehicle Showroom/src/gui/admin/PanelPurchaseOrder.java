@@ -7,6 +7,7 @@ package gui.admin;
 
 import bean.PurchaseOrder;
 import bean.PurchaseOrderDetails;
+import bean.Vehicle;
 import bean.VehicleRegistration;
 import gui.Home;
 import gui.Login;
@@ -75,7 +76,7 @@ public class PanelPurchaseOrder extends javax.swing.JPanel {
         purchaseOrder.setUser(Login.acc);
         Date today = new Date(System.currentTimeMillis());
         purchaseOrder.setPurchaseDate(today);
-        purchaseOrder.setStatus(false);
+        purchaseOrder.setStatus(true);
         listPurchaseOrderDetailses = new ArrayList<>();
         listVehicleRegistrations = new ArrayList<>();
     }
@@ -253,8 +254,21 @@ public class PanelPurchaseOrder extends javax.swing.JPanel {
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnFinishActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinishActionPerformed
-        int InsertDBPurchaseOrder = InsertDBPurchaseOrder(purchaseOrder.getUser().getUserId(), purchaseOrder.getPurchaseDate(), purchaseOrder.isStatus());
-        JOptionPane.showMessageDialog(scrListproduct, InsertDBPurchaseOrder);
+        int i = 0;
+        int purchaseOrderId = InsertDBPurchaseOrder(purchaseOrder.getUser().getUserId(),
+                purchaseOrder.getPurchaseDate(), purchaseOrder.isStatus());
+        purchaseOrder.setPurchaseId(purchaseOrderId);
+        for (PurchaseOrderDetails oDetails : listPurchaseOrderDetailses) {
+            int vehicleID = InsertDBVehicle(oDetails.getoVehicle());
+            listVehicleRegistrations.get(i).getoVehicle().setVehicleId(vehicleID);
+            listVehicleRegistrations.get(i).setoPurchaseOrder(purchaseOrder);
+            InsertDBPurchaseOrderDetail(vehicleID, oDetails);
+            i++;
+        }
+        for (VehicleRegistration oVehicle : listVehicleRegistrations) {
+            InsertDBVehicleRegistration(oVehicle);
+        }
+        JOptionPane.showMessageDialog(scrListproduct, "Success!");
     }//GEN-LAST:event_btnFinishActionPerformed
 
     private int InsertDBPurchaseOrder(int userId, Date date, boolean status) {
@@ -280,13 +294,99 @@ public class PanelPurchaseOrder extends javax.swing.JPanel {
                 while (rs.next()) {
                     id = rs.getInt("PurchaseId");
                 }
-            } else {
-                JOptionPane.showMessageDialog(scrListproduct, "DMK");
             }
         } catch (SQLException ex) {
             Logger.getLogger(PanelPurchaseOrder.class.getName()).log(Level.SEVERE, null, ex);
         }
         return id;
+    }
+
+    private void InsertDBPurchaseOrderDetail(int vehicleId, PurchaseOrderDetails purchaseOrderDetails) {
+        PreparedStatement pstmt = null;
+        try {
+            String str = "INSERT INTO [dbo].[PurchaseOrderDetails]"
+                    + "([PurchaseId],[VehicleId],[PurchasePrice],[Quantity])"
+                    + "VALUES"
+                    + "(?,?,?,?)";
+            pstmt = con.prepareStatement(str);
+            pstmt.setInt(1, purchaseOrder.getPurchaseId());
+            pstmt.setInt(2, vehicleId);
+            pstmt.setFloat(3, purchaseOrderDetails.getPurchasePrice());
+            pstmt.setInt(4, purchaseOrderDetails.getQuantity());
+            pstmt.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(PanelPurchaseOrder.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private int InsertDBVehicle(Vehicle vehicle) {
+        int id = 0;
+        PreparedStatement pstmt = null;
+        try {
+            String str = "INSERT INTO [dbo].[Vehicle]"
+                    + "([Name],[Image],[Model],[Speed],[Weight],[Description],[OverallHeight],"
+                    + "[OverallWidth],[OverallLength],[SeatingCapacity],[FuelTank],[BrandId])"
+                    + "VALUES"
+                    + "(?,?,?,?,?,?,?,?,?,?,?,?)";
+            pstmt = con.prepareStatement(str);
+            pstmt.setString(1, vehicle.getName());
+            pstmt.setString(2, vehicle.getImage());
+            pstmt.setString(3, vehicle.getModel());
+            pstmt.setFloat(4, vehicle.getSpeed());
+            pstmt.setFloat(5, vehicle.getWeight());
+            pstmt.setString(6, vehicle.getDescription());
+            pstmt.setFloat(7, vehicle.getOverallHeight());
+            pstmt.setFloat(8, vehicle.getOverallWidth());
+            pstmt.setFloat(9, vehicle.getOverallLength());
+            pstmt.setInt(10, vehicle.getSeatingCapacity());
+            pstmt.setFloat(11, vehicle.getFuelTank());
+            pstmt.setInt(12, vehicle.getoBrand().getBrandId());
+            int i = pstmt.executeUpdate();
+
+            String selectId = "SELECT [VehicleId]\n"
+                    + "      ,[Name]"
+                    + "      ,[Image]"
+                    + "      ,[Model]"
+                    + "      ,[Speed]"
+                    + "      ,[Weight]"
+                    + "      ,[Description]"
+                    + "      ,[OverallHeight]"
+                    + "      ,[OverallWidth]"
+                    + "      ,[OverallLength]"
+                    + "      ,[SeatingCapacity]\n"
+                    + "      ,[FuelTank]\n"
+                    + "      ,[BrandId]\n"
+                    + "  FROM [dbo].[Vehicle]";
+            pstmt = con.prepareStatement(selectId);
+            ResultSet rs = pstmt.executeQuery();
+            if (!rs.wasNull()) {
+                while (rs.next()) {
+                    id = rs.getInt("VehicleId");
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PanelPurchaseOrder.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return id;
+    }
+
+    private void InsertDBVehicleRegistration(VehicleRegistration vehicleRegistration) {
+        PreparedStatement pstmt = null;
+        try {
+            String str = "INSERT INTO [dbo].[VehicleRegistration]"
+                    + "([PurchaseId],[VehicleId],[Price],[Remarks],[Color])"
+                    + "VALUES"
+                    + "(?,?,?,?,?)";
+            pstmt = con.prepareStatement(str);
+            pstmt.setInt(1, vehicleRegistration.getoPurchaseOrder().getPurchaseId());
+            pstmt.setInt(2, vehicleRegistration.getoVehicle().getVehicleId());
+            pstmt.setFloat(3, vehicleRegistration.getPrice());
+            pstmt.setString(4, vehicleRegistration.getRemarks());
+            pstmt.setString(5, vehicleRegistration.getColor());
+            pstmt.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(PanelPurchaseOrder.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;

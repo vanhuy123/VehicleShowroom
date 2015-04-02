@@ -11,6 +11,7 @@ package bean;
  */
 public class Vehicle {
 
+    private int vehicleId;
     private String name;
     private String image;
     private String Model;
@@ -27,7 +28,8 @@ public class Vehicle {
     public Vehicle() {
     }
 
-    public Vehicle(String name, String image, String Model, float Speed, float Weight, String Description, float OverallHeight, float OverallWidth, float OverallLength, int SeatingCapacity, float FuelTank, Brand oBrand) {
+    public Vehicle(int vehicleId, String name, String image, String Model, float Speed, float Weight, String Description, float OverallHeight, float OverallWidth, float OverallLength, int SeatingCapacity, float FuelTank, Brand oBrand) {
+        this.vehicleId = vehicleId;
         this.name = name;
         this.image = image;
         this.Model = Model;
@@ -40,6 +42,14 @@ public class Vehicle {
         this.SeatingCapacity = SeatingCapacity;
         this.FuelTank = FuelTank;
         this.oBrand = oBrand;
+    }
+
+    public int getVehicleId() {
+        return vehicleId;
+    }
+
+    public void setVehicleId(int vehicleId) {
+        this.vehicleId = vehicleId;
     }
 
     public String getName() {
@@ -137,6 +147,5 @@ public class Vehicle {
     public void setoBrand(Brand oBrand) {
         this.oBrand = oBrand;
     }
-    
-    
+
 }
