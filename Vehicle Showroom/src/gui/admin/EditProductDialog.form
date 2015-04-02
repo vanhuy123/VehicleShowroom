@@ -563,7 +563,7 @@
           <Font name="Tahoma" size="24" style="1"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="text" type="java.lang.String" value="ADIT PRODUCT"/>
+        <Property name="text" type="java.lang.String" value="EDIT PRODUCT"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel4">
