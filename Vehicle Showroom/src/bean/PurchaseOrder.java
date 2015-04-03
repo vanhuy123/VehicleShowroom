@@ -5,8 +5,8 @@
  */
 package bean;
 
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -15,18 +15,17 @@ import java.util.Date;
 public class PurchaseOrder {
 
     private int purchaseId;
-    private Account user;
+    private Account userId;
     private Date purchaseDate;
-    private boolean status;
-    private ArrayList<PurchaseOrderDetails> listPurchaseOrderDetails;
+    private int status;
+    private List<PurchaseOrderDetails> listPurchaseOrderDetails;
 
     public PurchaseOrder() {
-        listPurchaseOrderDetails = new ArrayList<>();
     }
 
-    public PurchaseOrder(int purchaseId, Account user, Date purchaseDate, boolean status, ArrayList<PurchaseOrderDetails> listPurchaseOrderDetails) {
+    public PurchaseOrder(int purchaseId, Account userId, Date purchaseDate, int status, List<PurchaseOrderDetails> listPurchaseOrderDetails) {
         this.purchaseId = purchaseId;
-        this.user = user;
+        this.userId = userId;
         this.purchaseDate = purchaseDate;
         this.status = status;
         this.listPurchaseOrderDetails = listPurchaseOrderDetails;
@@ -40,12 +39,12 @@ public class PurchaseOrder {
         this.purchaseId = purchaseId;
     }
 
-    public Account getUser() {
-        return user;
+    public Account getUserId() {
+        return userId;
     }
 
-    public void setUser(Account user) {
-        this.user = user;
+    public void setUserId(Account userId) {
+        this.userId = userId;
     }
 
     public Date getPurchaseDate() {
@@ -56,19 +55,22 @@ public class PurchaseOrder {
         this.purchaseDate = purchaseDate;
     }
 
-    public boolean isStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 
-    public ArrayList<PurchaseOrderDetails> getListPurchaseOrderDetails() {
+    public List<PurchaseOrderDetails> getListPurchaseOrderDetails() {
         return listPurchaseOrderDetails;
     }
 
-    public void setListPurchaseOrderDetails(ArrayList<PurchaseOrderDetails> listPurchaseOrderDetails) {
+    public void setListPurchaseOrderDetails(List<PurchaseOrderDetails> listPurchaseOrderDetails) {
         this.listPurchaseOrderDetails = listPurchaseOrderDetails;
     }
+
+    
+    
 }

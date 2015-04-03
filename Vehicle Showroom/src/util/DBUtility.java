@@ -22,7 +22,7 @@ public class DBUtility {
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             if(con==null||con.isClosed())
-                con = DriverManager.getConnection("jdbc:sqlserver://localhost:1433;databaseName=Vehicle", "sa", "1234567");
+                con = DriverManager.getConnection("jdbc:sqlserver://localhost:1433;databaseName=VehicleShowroom", "sa", "1234567");
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(DBUtility.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -51,5 +51,21 @@ public class DBUtility {
                 Logger.getLogger(DBUtility.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+    }
+
+    public DBUtility(int i) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public ResultSet getClass(String SQL) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public boolean updateData(String s) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public ResultSet getData(String SQL) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
