@@ -214,13 +214,13 @@ public class PanelSearchProduct extends javax.swing.JPanel {
                     + "  ON c.BrandId = b.BrandId"
                     + "  where b.Name = ?");
             ResultSet rs = pstmt.executeQuery();
-            if (!rs.wasNull()) {
-                while (rs.next()) {
-                    
-                }
-            }else{
-                joption
-            }
+//            if (!rs.wasNull()) {
+//                while (rs.next()) {
+//                    
+//                }
+//            }else{
+//                joption
+//            }
         } catch (SQLException ex) {
             Logger.getLogger(PanelSearchProduct.class.getName()).log(Level.SEVERE, null, ex);
         }
