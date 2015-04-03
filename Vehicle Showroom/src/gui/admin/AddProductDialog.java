@@ -60,7 +60,7 @@ public class AddProductDialog extends javax.swing.JDialog {
             ResultSet resultSet = pstmt.executeQuery();
             if (!resultSet.wasNull()) {
                 while (resultSet.next()) {
-                    cbbBrand.addItem(resultSet.getString(2));
+                    cbbBrand.addItem(resultSet.getString(2).trim());
                     mapBrand.put(resultSet.getString(2), resultSet.getInt(1));
                 }
             }

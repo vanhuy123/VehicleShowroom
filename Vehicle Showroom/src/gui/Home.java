@@ -1,6 +1,5 @@
 package gui;
 
-import bean.PurchaseOrder;
 import gui.admin.PanelPurchaseOrder;
 
 /*
@@ -54,7 +53,7 @@ public class Home extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
+        tfSearch = new javax.swing.JLabel();
         pnlHomeRight = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
@@ -84,6 +83,7 @@ public class Home extends javax.swing.JFrame {
 
         spHome.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(51, 153, 255), new java.awt.Color(204, 204, 255)));
         spHome.setDividerLocation(250);
+        spHome.setEnabled(false);
         spHome.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         spHome.setOneTouchExpandable(true);
 
@@ -99,6 +99,8 @@ public class Home extends javax.swing.JFrame {
         btnHome.setText("HOME");
         btnHome.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btnHome.setIconTextGap(10);
+        btnHome.setMaximumSize(new java.awt.Dimension(185, 41));
+        btnHome.setMinimumSize(new java.awt.Dimension(185, 41));
         btnHome.setPreferredSize(new java.awt.Dimension(145, 40));
 
         btnWarehouse.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -111,11 +113,13 @@ public class Home extends javax.swing.JFrame {
         btnSale.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnSale.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/label_sale green30.png"))); // NOI18N
         btnSale.setText("SALE");
+        btnSale.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btnSale.setPreferredSize(new java.awt.Dimension(145, 40));
 
         btnPurchase.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnPurchase.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Purchase30.png"))); // NOI18N
         btnPurchase.setText("PURCHASE");
+        btnPurchase.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btnPurchase.setPreferredSize(new java.awt.Dimension(145, 40));
         btnPurchase.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -209,13 +213,13 @@ public class Home extends javax.swing.JFrame {
             }
         });
 
-        jLabel11.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(0, 0, 255));
-        jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/search30.png"))); // NOI18N
-        jLabel11.setText("Search");
-        jLabel11.addMouseListener(new java.awt.event.MouseAdapter() {
+        tfSearch.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        tfSearch.setForeground(new java.awt.Color(0, 0, 255));
+        tfSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/search30.png"))); // NOI18N
+        tfSearch.setText("Search");
+        tfSearch.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel11MouseClicked(evt);
+                tfSearchMouseClicked(evt);
             }
         });
 
@@ -234,15 +238,14 @@ public class Home extends javax.swing.JFrame {
                     .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(tfSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(txtLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(6, 6, 6)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -254,11 +257,11 @@ public class Home extends javax.swing.JFrame {
                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(6, 6, 6)
                 .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(62, 62, 62))
+                .addGap(6, 6, 6)
+                .addComponent(tfSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 21, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout pnlHomeLeftLayout = new javax.swing.GroupLayout(pnlHomeLeft);
@@ -507,9 +510,10 @@ public class Home extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jLabel7MouseClicked
 
-    private void jLabel11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel11MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel11MouseClicked
+    private void tfSearchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tfSearchMouseClicked
+        PanelSearchProduct pnlSearchProduct = new PanelSearchProduct();
+        spHome.setRightComponent(pnlSearchProduct);
+    }//GEN-LAST:event_tfSearchMouseClicked
 
     private void jLabel9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel9MouseClicked
         // TODO add your handling code here:
@@ -560,7 +564,6 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JButton btnSale;
     private javax.swing.JButton btnWarehouse;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -586,6 +589,7 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JPanel pnlHomeLeft;
     private javax.swing.JPanel pnlHomeRight;
     private javax.swing.JSplitPane spHome;
+    private javax.swing.JLabel tfSearch;
     private javax.swing.JLabel txtLogin;
     // End of variables declaration//GEN-END:variables
 }
